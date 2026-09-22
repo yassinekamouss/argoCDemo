@@ -5,7 +5,7 @@ metadata:
   name: express-app
 
 spec:
-  replicas: 3
+  replicas: 2
 
   selector:
     matchLabels:
