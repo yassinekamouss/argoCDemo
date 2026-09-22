@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: express-app
+
+spec:
+  selector:
+    app: express
+
+  ports:
+    - port: 3000
+      targetPort: 3000
+
+  type: ClusterIP

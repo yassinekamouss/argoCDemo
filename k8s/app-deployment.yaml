@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: express-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: express
+
+  template:
+    metadata:
+      labels:
+        app: express
+
+    spec:
+      containers:
+        - name: express
+
+          image: k8s-demo-app:1.0
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 3000
+
+          env:
+            - name: PORT
+              value: "3000"
+
+            - name: MONGO_HOST
+              value: "mongodb"
+
+            - name: MONGO_PORT
+              value: "27017"
+
+            - name: MONGO_DATABASE
+              value: "users"
+
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

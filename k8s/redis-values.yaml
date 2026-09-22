@@ -1,0 +1,16 @@
+architecture: standalone
+
+auth:
+  enabled: false # Désactivé pour simplifier la démo (ou définir un mot de passe)
+
+master:
+  persistence:
+    enabled: true
+    size: 1Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
