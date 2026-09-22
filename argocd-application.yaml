@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-nginx-mongodb-demo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    # Replace with your actual git repository URL:
+    repoURL: https://github.com/yassinekamouss/argoCDemo.git
+    targetRevision: main
+    path: k8s
+  destination:
+    # Internal cluster API endpoint
+    server: https://kubernetes.default.svc
+    # Deploy resources into the 'demo' namespace
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true      # Automatically delete resources removed from git
+      selfHeal: true   # Automatically revert manual kubectl changes (drifts)
+    syncOptions:
+      - CreateNamespace=true
